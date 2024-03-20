@@ -59,6 +59,7 @@ input {
   width: 90%;
   border:2px solid black ;
   border-radius: 10px;
+  outline:none;
   background-image: linear-gradient(45deg,purple, rgb(0, 87, 128));
   padding: 10px;
   height: 30px;
@@ -138,7 +139,7 @@ function addCard() {
   var cardContainer = document.getElementById("cardContainer");
   var cardDiv = document.createElement("div");
   cardDiv.classList.add("card");
-  cardDiv.innerHTML = "<div><span><h2>" + title + "</h2><p>" + description + "</p></span><video width='100%' style='border:white 1px solid;' height='300px' poster='image.jpg' controls onclick='openFullScreen(\"" + videoSrc + "\")'><source src='" + videoSrc + "' type='video/mp4'>Your browser does not support the video tag.</video></div><div class='button-container'><button class='button' onclick='removeCard(this.parentNode.parentNode)'> Remove</button></div>";
+  cardDiv.innerHTML = "<div><span><h2>" + title + "</h2><p>" + description + "</p></span><video width='100%' style='border:white 1px solid;' poster='image.jpg' controls onclick='openFullScreen(\"" + videoSrc + "\")'><source src='" + videoSrc + "' type='video/mp4'>Your browser does not support the video tag.</video></div><div class='button-container'><button class='button' onclick='removeCard(this.parentNode.parentNode)'> Remove</button></div>";
   cardContainer.appendChild(cardDiv);
 
   document.getElementById("title").value = "";
