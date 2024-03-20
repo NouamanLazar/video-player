@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title> video player</title>
+<style>
+* {
+  font-family: Arial, Helvetica, sans-serif;
+  letter-spacing: -1;
+}
+.container {
+  text-align: left;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.card {
+  width: 88%;
+  background-image: linear-gradient(45deg,purple, rgb(0, 87, 128));
+  border-radius: 8px;
+  padding: 20px;
+  margin: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+.card  div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.card div span {
+    overflow: hidden;
+    text-align:left;
+}
+.button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.button {
+  display: inline-block;
+  border: black 2px solid;
+  background-color: #ff0000;
+  border-radius: 5px;
+  color: #696868;
+  padding: 10px 20px;
+  font-weight: 900;
+  width: 100%;
+  text-decoration: none;
+  border-radius: 4px;
+  margin-top: 10px;
+}
+input {
+  width: 90%;
+  border:2px solid black ;
+  border-radius: 10px;
+  background-image: linear-gradient(45deg,purple, rgb(0, 87, 128));
+  padding: 10px;
+  height: 30px;
+  color: #f0f0f0;
+}
+input::placeholder {
+  color: #bdbaba;
+}
+.form-container {
+  text-align: center;
+}
+.add {
+  background-color: greenyellow;
+  width: 94%;
+  height: 40px;
+  border-radius: 4px;
+  font-weight: 900;
+  color: rgb(104, 105, 105);
+  border: #fff;
+}
+@media (min-width:900px) {
+  input {
+    width: 30%;
+  }
+  .add {
+    width: 96.5%;
+  }
+  .card {
+    width: 45%;
+  }
+}
+.form-container input, .form-container button {
+  margin: 5px;
+  padding: 8px;
+}
+/* تغيير حجم الفيديو عند النقر */
+.video-fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.video-fullscreen video {
+  width: 90%;
+  height: 90%;
+  margin: 5% auto;
+  display: block;
+}
+</style>
+</head>
+<body style="background-color: #03061a;">
+<h4 style="text-align: center; font-family: cursive; color: #f0f0f0;">Made By <a href="https://github.com/NouamanLazar/" style="font-family: cursive; color: rgb(255, 0, 212);">Nouaman Lazar</a></h4>
+<div class="form-container">
+  <input type="text" id="title" placeholder="Title">
+  <input type="text" id="description" placeholder="Description">
+  <input type="text" id="videoSrc" placeholder="Video Src ">
+  <button class="add" onclick="addCard()">Add</button>
+</div>
+
+<div class="container" id="cardContainer">
+</div>
+<script>
+function addCard() {
+  var title = document.getElementById("title").value;
+  var description = document.getElementById("description").value;
+  var videoSrc = document.getElementById("videoSrc").value;
+
+  if (!title || !description || !videoSrc) {
+    alert("الرجاء ملء كل الحقول");
+    return;
+  }
+
+  var cardContainer = document.getElementById("cardContainer");
+  var cardDiv = document.createElement("div");
+  cardDiv.classList.add("card");
+  cardDiv.innerHTML = "<div><span><h2>" + title + "</h2><p>" + description + "</p></span><video width='100%' style='border:white 1px solid;' height='300px' poster='image.jpg' controls onclick='openFullScreen(\"" + videoSrc + "\")'><source src='" + videoSrc + "' type='video/mp4'>Your browser does not support the video tag.</video></div><div class='button-container'><button class='button' onclick='removeCard(this.parentNode.parentNode)'> Remove</button></div>";
+  cardContainer.appendChild(cardDiv);
+
+  document.getElementById("title").value = "";
+  document.getElementById("description").value = "";
+  document.getElementById("videoSrc").value = "";
+}
+
+function removeCard(card) {
+  card.parentNode.removeChild(card);
+}
+
+// فتح الفيديو بحجم كامل
+function openFullScreen(videoSrc) {
+  var videoFullscreen = document.createElement("div");
+  videoFullscreen.classList.add("video-fullscreen");
+  videoFullscreen.innerHTML = "<video controls autoplay><source src='" + videoSrc + "' type='video/mp4'>Your browser does not support the video tag.</video><button class='button' onclick='closeFullScreen()'> Close</button>";
+  document.body.appendChild(videoFullscreen);
+}
+
+// إغلاق الفيديو بحجم كامل
+function closeFullScreen() {
+  var videoFullscreen = document.querySelector(".video-fullscreen");
+  videoFullscreen.parentNode.removeChild(videoFullscreen);
+}
+</script>
+</body>
+</html>
